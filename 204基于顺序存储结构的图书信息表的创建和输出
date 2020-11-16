@@ -1,0 +1,53 @@
+#include<iostream> 
+#include<string>
+#include<iomanip>
+using namespace std; //带分号
+#define MaxSize 1000
+#define OK 1
+#define ERROR 0
+#define OVERFLOW -2
+typedef struct//定义结构
+{
+  string bnumber;
+  string bname;
+  float bprice;
+}Book;
+typedef struct //开辟空间
+{
+  Book *elem;//指向基地址
+  int length;
+}SqList;
+int InitSqlist(SqList &L)//初始化
+{
+  L.elem=new Book[MaxSize];
+  if(L.elem==NULL)//判定用==
+    exit(OVERFLOW);
+  L.length=0;
+  return OK;
+}
+int input(SqList &L)
+{
+  for(int i=0;i<MaxSize;i++)
+  {
+     cin>>L.elem[i].bnumber>>L.elem[i].bname>>L.elem[i].bprice;
+    if(L.elem[i].bnumber=="0" && L.elem[i].bname=="0" && L.elem[i].bprice==0)//字符串用""
+      return OK;
+    else 
+      L.length++;
+  }
+}
+int output(SqList L)//输出不用&
+{
+  cout<<L.length<<endl;//endl换行
+  for(int i=0;i<L.length;i++)
+    cout<<L.elem[i].bnumber<<" "<<L.elem[i].bname<<" "<<fixed<<setprecision(2)<<L.elem[i].bprice<<endl;//return不在for循环中
+  return OK;
+} 
+int main()
+{
+  SqList L;
+  InitSqlist (L);
+  input(L);
+  output(L);
+  return 0;
+}
